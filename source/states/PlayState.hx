@@ -5,6 +5,7 @@ import backend.StageData;
 import backend.WeekData;
 import backend.Song;
 import backend.Rating;
+import Shaders;
 
 import flixel.FlxBasic;
 import flixel.FlxObject;
@@ -122,6 +123,7 @@ class PlayState extends MusicBeatState
 	public static var uiPrefix:String = "";
 	public static var uiPostfix:String = "";
 	public static var isPixelStage(get, never):Bool;
+	public var shaderUpdates:Array<Float->Void> = [];
 
 	@:noCompletion
 	static function set_stageUI(value:String):String
