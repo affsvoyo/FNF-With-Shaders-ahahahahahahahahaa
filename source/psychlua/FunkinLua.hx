@@ -1465,7 +1465,7 @@ class FunkinLua {
 
 		call('onCreate', []);
 		#end
-	  }
+			
 		Lua_helper.add_callback(lua, "soundFadeCancel", function(tag:String) {
 			if(tag == null || tag.length < 1)
 			{
