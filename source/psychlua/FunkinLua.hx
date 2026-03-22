@@ -1604,7 +1604,7 @@ class FunkinLua {
 		});
 
 	//main
-	public var lastCalledFunction:String = '';
+  } public var lastCalledFunction:String = '';
 	public static var lastCalledScript:FunkinLua = null;
 	public function call(func:String, args:Array<Dynamic>):Dynamic {
 		if(closed) return LuaUtils.Function_Continue;
