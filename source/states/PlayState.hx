@@ -32,6 +32,7 @@ import substates.GameOverSubstate;
 
 #if !flash
 import openfl.filters.ShaderFilter;
+import openfl.filters.BitmapFilter;
 #end
 
 import shaders.ErrorHandledShader;
@@ -77,8 +78,8 @@ class PlayState extends MusicBeatState
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
-    public var camGameShaders:Array<ShaderFilter> = [];
-    public var camHUDShaders:Array<ShaderFilter> = [];
+    public var camGameShaders:Array<BitmapFilter> = [];
+    public var camHUDShaders:Array<BitmapFilter> = [];
 
 	public function addLuaShaderToCamera(cam:String, effect:ShaderEffect)
   {
@@ -112,7 +113,7 @@ public function clearShaderFromCamera(cam:String)
             camHUD.setFilters([]);
 
         case "other":
-            other.setFilters([]);
+            camOther.setFilters([]);
     }
 	}
 
