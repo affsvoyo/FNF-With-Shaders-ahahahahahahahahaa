@@ -1413,8 +1413,8 @@ class FunkinLua {
 					snd.fadeOut(duration, toValue);
 			}
 		});
-		if (ClientPrefs.shaders == true) {{
-			Lua_helper.add_callback(lua, "addChromaticAbberationEffect", function(camera:String, chromeOffset:Float = 0.005) {
+		 if (true) {
+			Lua_helper.add_callback(lua, "addChromaticAbberationEffect", function(camera:String, chromeOffset:Float = 0.005){
 				PlayState.instance.addLuaShaderToCamera(camera, new ChromaticAberrationEffect(chromeOffset));
 			});
 			Lua_helper.add_callback(lua, "addScanlineEffect", function(camera:String, lockAlpha:Bool = false) {
