@@ -1549,62 +1549,6 @@ class FunkinLua {
 			luaTrace("getModSetting: Mods are disabled in this build!", false, false, FlxColor.RED);
 			#end
 		});
-		//
-
-		Lua_helper.add_callback(lua, "debugPrint", function(text:Dynamic = '', color:String = 'WHITE') PlayState.instance.addTextToDebug(text, CoolUtil.colorFromString(color)));
-
-		addLocalCallback("close", function() {
-			closed = true;
-			trace('Closing script $scriptName');
-			return closed;
-		});
-
-		#if DISCORD_ALLOWED DiscordClient.addLuaCallbacks(lua); #end
-		#if ACHIEVEMENTS_ALLOWED Achievements.addLuaCallbacks(lua); #end
-		#if TRANSLATIONS_ALLOWED Language.addLuaCallbacks(lua); #end
-		HScript.implement(this);
-		#if flxanimate FlxAnimateFunctions.implement(this); #end
-		ReflectionFunctions.implement(this);
-		TextFunctions.implement(this);
-		ExtraFunctions.implement(this);
-		CustomSubstate.implement(this);
-		ShaderFunctions.implement(this);
-		DeprecatedFunctions.implement(this);
-
-		for (name => func in customFunctions)
-		{
-			if(func != null)
-				Lua_helper.add_callback(lua, name, func);
-		}
-
-		try{
-			var isString:Bool = !FileSystem.exists(scriptName);
-			var result:Dynamic = null;
-			if(!isString)
-				result = LuaL.dofile(lua, scriptName);
-			else
-				result = LuaL.dostring(lua, scriptName);
-
-			var resultStr:String = Lua.tostring(lua, result);
-			if(resultStr != null && result != 0) {
-				trace(resultStr);
-				#if windows
-				lime.app.Application.current.window.alert(resultStr, 'Error on lua script!');
-				#else
-				luaTrace('$scriptName\n$resultStr', true, false, FlxColor.RED);
-				#end
-				lua = null;
-				return;
-			}
-			if(isString) scriptName = 'unknown';
-		} catch(e:Dynamic) {
-			trace(e);
-			return;
-		}
-		trace('lua file loaded succesfully:' + scriptName);
-
-		call('onCreate', []);
-	}
 
 	//main
 	public var lastCalledFunction:String = '';
