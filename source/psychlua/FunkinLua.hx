@@ -1251,10 +1251,11 @@ class FunkinLua {
 			if(!Assets.exists(path, TEXT))
 			#end
 			#end
+				});
 				path = Paths.getPath('data/$songPath/$dialogueFile.json', TEXT);
 
 			luaTrace('startDialogue: Trying to load dialogue: ' + path);
-
+          
 			#if MODS_ALLOWED
 			if(FileSystem.exists(path))
 			#else
