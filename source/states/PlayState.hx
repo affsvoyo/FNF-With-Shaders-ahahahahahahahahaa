@@ -73,6 +73,7 @@ import crowplexus.hscript.Printer;
  * "function triggerEvent" - Called when the song hits your event's timestamp, this is probably what you were looking for
 **/
 class PlayState extends MusicBeatState
+{
 	public static var STRUM_X = 42;
 	public static var STRUM_X_MIDDLESCROLL = -278;
 
