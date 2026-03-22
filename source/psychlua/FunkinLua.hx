@@ -1251,7 +1251,6 @@ class FunkinLua {
 			if(!Assets.exists(path, TEXT))
 			#end
 			#end
-				});
 				path = Paths.getPath('data/$songPath/$dialogueFile.json', TEXT);
 
 			luaTrace('startDialogue: Trying to load dialogue: ' + path);
@@ -1866,4 +1865,3 @@ class FunkinLua {
 		return false;
 	}
 }
-#end
