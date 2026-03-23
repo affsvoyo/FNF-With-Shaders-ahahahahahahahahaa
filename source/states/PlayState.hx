@@ -33,6 +33,7 @@ import substates.GameOverSubstate;
 #if !flash
 import openfl.filters.ShaderFilter;
 import openfl.filters.BitmapFilter;
+import openfl.display.Shader;
 #end
 
 import shaders.ErrorHandledShader;
@@ -81,42 +82,84 @@ class PlayState extends MusicBeatState
     public var camGameShaders:Array<BitmapFilter> = [];
     public var camHUDShaders:Array<BitmapFilter> = [];
 
-	public function addLuaShaderToCamera(cam:String, effect:ShaderEffect)
-  {
-    var filter = new ShaderFilter(effect.shader);
+	public function addLuaShaderToCamera(cam:String, effect:ShaderEffect) { // STOLE FROM ANDROMEDA
 
-    switch(cam)
-    {
-        case "camgame":
-            camGameShaders.push(filter);
-            camGame.setFilters(camGameShaders);
-
-        case "camhud":
-            camHUDShaders.push(filter);
-            camHUD.setFilters(camHUDShaders);
-
-        case "camother":
-            camOther.setFilters([filter]);
-    }
-}
-
-public function clearShaderFromCamera(cam:String)
-{
-    switch(cam)
-    {
-        case "game":
-            camGameShaders = [];
-            camGame.setFilters([]);
-
-        case "hud":
-            camHUDShaders = [];
-            camHUD.setFilters([]);
-
-        case "other":
-            camOther.setFilters([]);
-    }
+		switch (cam.toLowerCase()) {
+			case 'camhud' | 'hud':
+				camHUDShaders.push(effect);
+				var newCamEffects:Array<BitmapFilter> = []; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+				for (i in camHUDShaders) {
+					newCamEffects.push(new ShaderFilter(i.shader));
+				}
+				camHUD.setFilters(newCamEffects);
+			case 'camother' | 'other':
+				camOtherShaders.push(effect);
+				var newCamEffects:Array<BitmapFilter> = []; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+				for (i in camOtherShaders) {
+					newCamEffects.push(new ShaderFilter(i.shader));
+				}
+				camOther.setFilters(newCamEffects);
+			case 'camgame' | 'game':
+				camGameShaders.push(effect);
+				var newCamEffects:Array<BitmapFilter> = []; // IT SHUTS HAXE UP IDK WHY BUT WHATEVER IDK WHY I CANT JUST ARRAY<SHADERFILTER>
+				for (i in camGameShaders) {
+					newCamEffects.push(new ShaderFilter(i.shader));
+				}
+				camGame.setFilters(newCamEffects);
+			default:
+				if (modchartSprites.exists(cam)) {
+					Reflect.setProperty(modchartSprites.get(cam), "shader", effect.shader);
+				} else if (modchartTexts.exists(cam)) {
+					Reflect.setProperty(modchartTexts.get(cam), "shader", effect.shader);
+				} else {
+					var OBJ = Reflect.getProperty(PlayState.instance, cam);
+					Reflect.setProperty(OBJ, "shader", effect.shader);
+				}
+		}
 	}
 
+	public function removeShaderFromCamera(cam:String, effect:ShaderEffect) {
+		switch (cam.toLowerCase()) {
+			case 'camhud' | 'hud':
+				camHUDShaders.remove(effect);
+				var newCamEffects:Array<BitmapFilter> = [];
+				for (i in camHUDShaders) {
+					newCamEffects.push(new ShaderFilter(i.shader));
+				}
+				camHUD.setFilters(newCamEffects);
+			case 'camother' | 'other':
+				camOtherShaders.remove(effect);
+				var newCamEffects:Array<BitmapFilter> = [];
+				for (i in camOtherShaders) {
+					newCamEffects.push(new ShaderFilter(i.shader));
+				}
+				camOther.setFilters(newCamEffects);
+			default:
+				camGameShaders.remove(effect);
+				var newCamEffects:Array<BitmapFilter> = [];
+				for (i in camGameShaders) {
+					newCamEffects.push(new ShaderFilter(i.shader));
+				}
+				camGame.setFilters(newCamEffects);
+		}
+	}
+
+	public function clearShaderFromCamera(cam:String) {
+		switch (cam.toLowerCase()) {
+			case 'camhud' | 'hud':
+				camHUDShaders = [];
+				var newCamEffects:Array<BitmapFilter> = [];
+				camHUD.setFilters(newCamEffects);
+			case 'camother' | 'other':
+				camOtherShaders = [];
+				var newCamEffects:Array<BitmapFilter> = [];
+				camOther.setFilters(newCamEffects);
+			default:
+				camGameShaders = [];
+				var newCamEffects:Array<BitmapFilter> = [];
+				camGame.setFilters(newCamEffects);
+		}
+	}
 	public static var ratingStuff:Array<Dynamic> = [
 		['You Suck!', 0.2], //From 0% to 19%
 		['Shit', 0.4], //From 20% to 39%
@@ -1316,6 +1359,9 @@ public function clearShaderFromCamera(cam:String)
 	private function generateSong():Void
 	{
 		// FlxG.log.add(ChartParser.parse());
+		camGame.filtersEnabled = true;
+        camHUD.filtersEnabled = true;
+        camOther.filtersEnabled = true;
 		songSpeed = PlayState.SONG.speed;
 		songSpeedType = ClientPrefs.getGameplaySetting('scrolltype');
 		switch(songSpeedType)
