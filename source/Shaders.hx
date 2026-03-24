@@ -251,7 +251,7 @@ class GrainEffect extends Effect {
 		shader.grainsize.value = [grainsize];
 		shader.lockAlpha.value = [lockAlpha];
 		shader.uTime.value = [FlxG.random.float(0, 8)];
-		PlayState.instance.shaderUpdates.push(update);
+		states.PlayState.instance.shaderUpdates.push(update);
 	}
 
 	public function update(elapsed) {
@@ -425,7 +425,7 @@ class VCRDistortionEffect extends Effect {
 		shader.iResolution.value = [Lib.current.stage.stageWidth, Lib.current.stage.stageHeight];
 		// var noise = Assets.getBitmapData(Paths.image("noise2"));
 		// shader.noiseTex.input = noise;
-		PlayState.instance.shaderUpdates.push(update);
+		states.PlayState.instance.shaderUpdates.push(update);
 	}
 
 	public function update(elapsed:Float) {
@@ -922,7 +922,7 @@ class GlitchEffect extends Effect {
 		this.waveSpeed = waveSpeed;
 		this.waveFrequency = waveFrequency;
 		this.waveAmplitude = waveAmplitude;
-		PlayState.instance.shaderUpdates.push(update);
+		states.PlayState.instance.shaderUpdates.push(update);
 	}
 
 	public function update(elapsed:Float):Void {
@@ -960,7 +960,7 @@ class DistortBGEffect extends Effect {
 		this.waveFrequency = waveFrequency;
 		this.waveAmplitude = waveAmplitude;
 		shader.uTime.value = [0];
-		PlayState.instance.shaderUpdates.push(update);
+		states.PlayState.instance.shaderUpdates.push(update);
 	}
 
 	public function update(elapsed:Float):Void {
@@ -1001,7 +1001,7 @@ class PulseEffect extends Effect {
 		shader.uTime.value = [0];
 		shader.uampmul.value = [0];
 		shader.uEnabled.value = [false];
-		PlayState.instance.shaderUpdates.push(update);
+		states.PlayState.instance.shaderUpdates.push(update);
 	}
 
 	public function update(elapsed:Float):Void {
